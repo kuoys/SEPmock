@@ -1,0 +1,82 @@
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class OoooSmartClockTest {
+	DateFactory factory;
+	OoooSetTimeZoneDialogstub dialogStub;
+	OoooSmartClock clock;
+	@Before
+	public void setUp() throws Exception {
+		factory=new DateFactory();
+		dialogStub=new OoooSetTimeZoneDialogstub();
+		clock=new OoooSmartClock(dialogStub,factory);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void GetCurrentTimeStampTest() {
+
+		
+
+		assertEquals( new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),clock.getCurrentTimeStamp());
+
+
+	}
+	@Test 
+	public void GetLocalTimeStampTest(){
+			factory.set("2009-09-22 12:00:00");
+			clock.setStub(dialogStub, factory);
+			
+			assertEqual("",clock.getLocalCurrentTimeStamp());
+		
+		
+	}
+	
+	@Test
+	public void NODATAtest(){
+		dialogStub.setindex(-99);
+		 clock=new OoooSmartClock(dialogStub,factory);
+
+
+		clock.setTimeZone();
+
+		assertFalse(clock.dataExist);
+
+		dialogStub.setindex(9);
+		clock=new OoooSmartClock(dialogStub,factory);
+
+
+		clock.setTimeZone();
+		assertTrue(clock.dataExist);
+
+
+
+	}
+	class OoooSetTimeZoneDialogstub implements IOoooSetTimeZoneDialog{
+		private int index=-1;
+
+		public int getindex() throws NODATA{
+
+			if (index<0 || index >24)
+				throw new NODATA();
+
+			return index;
+		}
+		public void setindex(int x){
+			this.index=x;
+
+		}
+
+	}
+
+
+}

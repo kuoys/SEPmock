@@ -1,0 +1,74 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * 
+ */
+
+/**
+ * @author user
+ *
+ */
+class OoooSmartClock { 
+	private  int timeZone;
+	public void setTimeZone() {
+		// 當這個method 被呼叫的時候會有一個 dialog 跳出來
+		// 讓使用者選一個時區。這個 dialog 由你的同事來實作
+		// 大致上是讓使用者從成千上百的城市選取，但是你的同事
+		// 要負責幫你轉換成標準時區
+		// 事先約定好的呼叫的方式如下:
+		int zoneindex = new OoooSetTimeZoneDialog() ;
+		// 全球的 time zone 共被劃分成 24個時區，所以正常
+		// 結果 OoooSetTimeZoneDialog() 會回傳 0-23
+		// 0 代表換日線的最開始時區
+		// 如果使用者沒有選擇，則會有個 exception NODATA 從
+		// OoooSetTimeZoneDialog() 丟出來
+
+
+	}
+
+	public void setTimeZone(int index) {  
+		// nothing to explain, a simple setter
+		this.timeZone=index;
+	}
+	public String getCurrentTimeStamp() {
+		// YYYY-MM-DD HH:MI:Sec 形式的 format 
+		// 例如 ”2009-09-22 16:47:08”
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// 當這個 method 被呼叫的時候請回傳
+		Date date_now = new Date( );
+		return sdf.format(date_now);
+	}
+
+
+	public String getLocalCurrentTimeStamp() {
+		// 這個 method 被呼叫的時候會回傳比較人性的字串
+		// 1. 當時間介於 12:00:00-12:01:00 的時候會回傳
+		//   “2009-09-22 NOON”
+		// 2. 當時間介於 00:00:00-00:01:00 的時候會回傳
+		//   “2009-09-22 MIDNIGHT
+		// 3. 當日期是國慶日的時候回傳
+		//    “2009-10-10 DOUBLE-TEN 16:37:08”
+		// 4. 當日期是父親節的時候回傳
+		//    “2009-08-08 FATHER’S DAY 16:37:08”
+		// 5. 當日期是聖誕節時回傳
+		//    “2009-12-25 X’MAS 16:37:08
+		// 以上日期的變化與時間會互相結合
+		// 所以 “2009-12-25 X’MAS NOON” 是正確的字串如果時間
+		// 落在以上的條件的綜合
+		return "123";
+	}
+}
+
+class OoooSetTimeZoneDialog{
+
+	   OoooSetTimeZoneDialog(){
+		   
+			
+		
+	}
+	
+	   
+	   
+
+}

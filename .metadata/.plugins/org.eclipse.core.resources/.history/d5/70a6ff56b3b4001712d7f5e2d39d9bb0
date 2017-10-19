@@ -1,0 +1,89 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+
+class OoooSmartClock {
+	private TimeZone timeZone;
+	private IOoooSetTimeZoneDialog  stubDialog;
+	boolean dataExist=true;
+	private DateFactory datefactory;
+	
+	
+	OoooSmartClock( ){
+		this.stubDialog=new OoooSetTimeZoneDialog();
+		datefactory=new DateFactory();
+	}
+	OoooSmartClock( IOoooSetTimeZoneDialog stub,DateFactory datefactory){
+		this.stubDialog=stub;
+		this.datefactory=datefactory;
+		
+	}
+	public void setStub(IOoooSetTimeZoneDialog  stubDialog,DateFactory factory){
+		this.stubDialog=stubDialog;
+		this.datefactory=factory;
+		
+		
+	}
+	public void setTimeZone()  {
+		// 當這個method 被呼叫的時候會有一個 dialog 跳出來
+		// 讓使用者選一個時區。這個 dialog 由你的同事來實作
+		// 大致上是讓使用者從成千上百的城市選取，但是你的同事
+		// 要負責幫你轉換成標準時區
+		// 事先約定好的呼叫的方式如下:
+		
+		try {
+			int zoneindex=stubDialog.getindex();
+		//	int zoneindex = new OoooSetTimeZoneDialog();
+			this.timeZone=TimeZone.getTimeZone("GMT+"+zoneindex);
+		} catch (NODATA e) {
+			// TODO Auto-generated catch block
+			if (e.getMessage().equals("NODATA"))
+					dataExist=false;
+		}
+		
+	}
+
+	public void setTimeZone(int index) {
+		// nothing to explain, a simple setter
+		this.timeZone = TimeZone.getTimeZone("GMT+"+index);
+	}
+
+	public String getCurrentTimeStamp() {
+		// YYYY-MM-DD HH:MI:Sec 形式的 format
+		// 例如 ”2009-09-22 16:47:08”
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// 當這個 method 被呼叫的時候請回傳
+		Date date_now = datefactory.create();
+		return sdf.format(date_now);
+	}
+
+	public String getLocalCurrentTimeStamp() {
+		Date date=datefactory.create();
+		 //date = "yyyy-MM-dd";
+		String date_ans=new SimpleDateFormat("yyyy-MM-dd").format(date);
+		//  add day to date
+		SimpleDateFormat sdf=new SimpleDateFormat("MM-dd");
+		if( sdf.format(date).equals("10-10"))
+			date_ans=date_ans+" "+"DOUBLE-TEN";
+		else if (sdf.format(date).equals("08-08"))
+			date_ans=date_ans+" "+"FATHER'S DAY";
+		else if (sdf.format(date).equals("12-25"))
+			date_ans=date_ans+" "+" X'MAS";
+		
+		//adding hour:minute:seonds
+		String time=new SimpleDateFormat("HH:mm:ss").format(date);
+		if (time.matches("12:00:[0-5]{1}[0-9]{1}"))
+			date_ans=date_ans+" "+"NOON";
+		else if (time.matches("00:00:[0-5]{1}[0-9]{1}"))
+			date_ans=date_ans+" "+"MIDNIGHT";
+		else 
+			date_ans=date_ans+" "+time;
+	
+		return date_ans;
+	}
+}
+
+
+
+

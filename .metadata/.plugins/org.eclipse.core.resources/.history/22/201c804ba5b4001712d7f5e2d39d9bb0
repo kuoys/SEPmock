@@ -1,0 +1,6 @@
+
+interface IOoooSetTimeZoneDialog {
+	
+	int getindex(int index);
+
+}

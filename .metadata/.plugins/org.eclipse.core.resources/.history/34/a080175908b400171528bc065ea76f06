@@ -1,0 +1,84 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * 
+ */
+
+/**
+ * @author user
+ *
+ */
+class OoooSmartClock {
+	private int timeZone;
+
+	public void setTimeZone() {
+		// 當這個method 被呼叫的時候會有一個 dialog 跳出來
+		// 讓使用者選一個時區。這個 dialog 由你的同事來實作
+		// 大致上是讓使用者從成千上百的城市選取，但是你的同事
+		// 要負責幫你轉換成標準時區
+		// 事先約定好的呼叫的方式如下:
+		
+		try {
+			int zoneindex = new OoooSetTimeZoneDialog();
+			this.timeZone=zoneindex;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 全球的 time zone 共被劃分成 24個時區，所以正常
+		// 結果 OoooSetTimeZoneDialog() 會回傳 0-23
+		// 0 代表換日線的最開始時區
+		// 如果使用者沒有選擇，則會有個 exception NODATA 從
+		// OoooSetTimeZoneDialog() 丟出來
+		
+	}
+
+	public void setTimeZone(int index) {
+		// nothing to explain, a simple setter
+		this.timeZone = index;
+	}
+
+	public String getCurrentTimeStamp() {
+		// YYYY-MM-DD HH:MI:Sec 形式的 format
+		// 例如 ”2009-09-22 16:47:08”
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// 當這個 method 被呼叫的時候請回傳
+		Date date_now = new Date();
+		return sdf.format(date_now);
+	}
+
+	public String getLocalCurrentTimeStamp() {
+		Date date=new Date();
+		 //date = "yyyy-MM-dd";
+		String date_ans=new SimpleDateFormat("yyyy-MM-dd").format(date);
+		//  special day   
+		SimpleDateFormat sdf=new SimpleDateFormat("MM-dd");
+		if( sdf.format(date).equals("10-10"))
+			date_ans=date_ans+" "+"DOUBLE-TEN";
+		else if (sdf.format(date).equals("08-08"))
+			date_ans=date_ans+" "+"FATHER’S DAY";
+		else if (sdf.format(date).equals("12-25"))
+			date_ans=date_ans+" "+" X’MAS";
+		
+		
+		String time=new SimpleDateFormat("HH:mm:ss").format(date);
+		if (time.matches("12:00:[0-5]{1}[0-9]{1}"))
+			date_ans=date_ans+" "+"NOON";
+		else if (time.matches("00:00:[0-5]{1}[0-9]{1}"))
+			date_ans=date_ans+" "+"MIDNIGHT";
+		else 
+			date_ans=date_ans+" "+time;
+	
+		return date_ans;
+	}
+}
+
+class OoooSetTimeZoneDialog {
+
+	OoooSetTimeZoneDialog() {
+			
+
+	}
+
+}

@@ -1,0 +1,23 @@
+INDEX VERSION 1.127+C:\Users\user\Documents\CSIE\3A\SEP\lab6-2\.metadata\.plugins\org.eclipse.jdt.core
+2739909654.index
+757215636.index
+3561753473.index
+2620432171.index
+1355269803.index
+2611286043.index
+674777730.index
+1798093564.index
+3935197991.index
+201068411.index
+3519063379.index
+1477723050.index
+2023653458.index
+2170344587.index
+808152565.index
+1650348301.index
+238474026.index
+2558090033.index
+764076646.index
+258426198.index
+3175799584.index
+558001719.index

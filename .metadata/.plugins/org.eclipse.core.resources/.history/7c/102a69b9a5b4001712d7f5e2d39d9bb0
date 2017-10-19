@@ -1,0 +1,57 @@
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class OoooSmartClockTest {
+
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void testGetCurrentTimeStamp() {
+		OoooSmartClock clock=new OoooSmartClock();
+
+		System.out.println(clock.getCurrentTimeStamp());
+		System.out.println(clock.getLocalCurrentTimeStamp());
+		assertEquals( new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),clock.getCurrentTimeStamp());
+		//assertEquals("test",clock.getLocalCurrentTimeStamp());
+		clock.setTimeZone();
+	}
+
+	public void testNODATA(){
+
+
+
+
+	}
+	class OoooSetTimeZoneDialogstub implements IOoooSetTimeZoneDialog{
+		private int index;
+		OoooSetTimeZoneDialogstub(int index){
+
+			this.index=index;
+		}
+		public int getindex(){
+			return index;
+		};
+
+	}
+	
+	class NODATA  extends Exception
+	{
+		public NODATA()
+		{
+			super("NODATA" );
+		}
+
+	}
+}

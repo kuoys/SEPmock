@@ -1,0 +1,77 @@
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class OoooSmartClockTest {
+
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void testGetCurrentTimeStamp() {
+		OoooSetTimeZoneDialogstub dialogStub=new OoooSetTimeZoneDialogstub(0);
+		OoooSmartClock clock=new OoooSmartClock(dialogStub);
+
+		System.out.println(clock.getCurrentTimeStamp());
+		System.out.println(clock.getLocalCurrentTimeStamp());
+		assertEquals( new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),clock.getCurrentTimeStamp());
+		//assertEquals("test",clock.getLocalCurrentTimeStamp());
+		clock.setTimeZone();
+	}
+
+	public void testNODATA(){
+		OoooSetTimeZoneDialogstub dialogStub=new OoooSetTimeZoneDialogstub();
+		OoooSmartClock clock=new OoooSmartClock(dialogStub);
+		
+		try {
+			clock.setTimeZone();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			assertEquals("NODATA",e.getMessage());
+		}
+		
+
+	}
+	class OoooSetTimeZoneDialogstub implements IOoooSetTimeZoneDialog{
+		private int index;
+		OoooSetTimeZoneDialogstub(){
+
+			
+		}
+		OoooSetTimeZoneDialogstub(int index){
+
+			this.index=index;
+		}
+		public int getindex(){
+			try{
+				return index;
+				
+			}
+			catch(Exception e){
+				throw e;
+				
+			}
+			
+		};
+
+	}
+	
+	class NODATA  extends Exception
+	{
+		public NODATA()
+		{
+			super("NODATA" );
+		}
+
+	}
+}
